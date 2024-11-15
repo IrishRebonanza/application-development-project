@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Boarding Ease</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Login to Boarding Ease</h1>
+        <form id="login-form">
+            <h2>Login</h2>
+             
+            <select id="login-user-type" required>
+                <option value="" disabled selected>Select User Type</option>
+                <option value="landlord">Landlord</option>
+                <option value="boarder">Boarder</option>
+            </select>
+
+            <input type="text" id="login-username" placeholder="Username" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            </select>
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="index.html">Sign Up</a></p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const userType = document.getElementById('login-user-type').value;
+
+            // Check if user exists in local storage
+            const storedUser = JSON.parse(localStorage.getItem(username));
+
+            if (storedUser && storedUser.password === password && storedUser.userType === userType) {
+                // Redirect to the appropriate dashboard
+                if (userType === 'landlord') {
+                    window.location.href = 'landlord-dashboard.html';
+                } else {
+                    window.location.href = 'boarder-dashboard.html';
+                }
+            } else {
+                alert('Invalid username, password, or user type. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>
